@@ -2045,6 +2045,10 @@ MonoBehaviour:
   mouseSensitivity: 2
   maxXRot: 70
   minXRot: -70
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  CheckDistance: 0.2
 --- !u!114 &919132148328367657
 MonoBehaviour:
   m_ObjectHideFlags: 0

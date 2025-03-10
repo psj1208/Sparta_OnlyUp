@@ -71,7 +71,7 @@ public class ParkourController : MonoBehaviour
 
         float duration = animationState.length;
         float elapsedTime = 0f;
-
+        bool CanPass = true;
         while (elapsedTime < duration) 
         {
             elapsedTime += Time.deltaTime;
@@ -81,8 +81,9 @@ public class ParkourController : MonoBehaviour
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, action.RequiredRot, 600f * Time.deltaTime);
             }
 
-            if (action.AllowTargetMatching)
+            if (action.AllowTargetMatching && CanPass)
             {
+                CanPass = false;
                 CompareTarget(action);
             }
             yield return null;
