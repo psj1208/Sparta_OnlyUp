@@ -9,10 +9,12 @@ using UnityEngine.Rendering;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Movement")]
     [SerializeField] private float moveSpeed;
     public float MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
     public float maxSpeed;
     [SerializeField] float SpeedChangevalue = 5f;
+    [SerializeField] float AniRotChangeSpeed = 2.0f;
     [SerializeField] float CurSpeed = 0f;
     Vector2 curMovementInput;
     [SerializeField] private float jumpPower;
@@ -34,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody rigid;
     Vector2 mouseDelta;
     Animator ani;
+    Coroutine jumpMethod;
     private void Start()
     {
         rigid = GetComponent<Rigidbody>();
@@ -76,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Started && canJump && isGround && !isJumping) 
         {
-            StartCoroutine(Jump());
+            jumpMethod = StartCoroutine(Jump());
         }
     }
 
@@ -107,8 +110,8 @@ public class PlayerMovement : MonoBehaviour
             direction.y = rigid.velocity.y;
 
             ani.SetFloat("MovementValue", CurSpeed);
-            ani.SetFloat("MoveForward", curMovementInput.x);
-            ani.SetFloat("MoveSide", curMovementInput.y);
+            ani.SetFloat("MoveForward", Mathf.Lerp(ani.GetFloat("MoveForward"), curMovementInput.x, AniRotChangeSpeed * Time.deltaTime));
+            ani.SetFloat("MoveSide", Mathf.Lerp(ani.GetFloat("MoveSide"), curMovementInput.y, AniRotChangeSpeed * Time.deltaTime));
             rigid.velocity = direction;
         }
     }
@@ -162,5 +165,16 @@ public class PlayerMovement : MonoBehaviour
         canMove = true;
         isJumping = false;
         yield return null;
+    }
+
+    public void JumpStop()
+    {
+        if (jumpMethod != null)
+        {
+            StopCoroutine(jumpMethod);
+            ani.SetBool("IsJump", false);
+            canMove = true;
+            isJumping = false;
+        }
     }
 }

@@ -24,7 +24,7 @@ public class ParkourAni : ScriptableObject
     public Vector3 ComparePosition { get; set; }
     public bool CheckIfAvailable(ObstacleInfo hitInfo, Transform player)
     {
-        float checkHeight = hitInfo.hitInfo.point.y - player.transform.position.y;
+        float checkHeight = hitInfo.heightInfo.point.y - player.transform.position.y;
 
         if (checkHeight < minimum || checkHeight > maximum)
         {

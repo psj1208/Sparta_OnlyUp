@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class IItem : MonoBehaviour
 {
-    object ItemInfo;
+    public Object ItemInfo;
     
     public virtual void OnInteraction()
     {

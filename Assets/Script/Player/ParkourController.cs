@@ -38,7 +38,6 @@ public class ParkourController : MonoBehaviour
     {
         if (context.started && !playerInAction)
         {
-            Debug.Log("hi");
             var hitData = obsCheck.CheckObstacle();
             if (hitData.hitFound)
             {
@@ -56,9 +55,9 @@ public class ParkourController : MonoBehaviour
 
     IEnumerator PerformParkourAction(ParkourAni action)
     {
+        player.pMove.JumpStop();
         player.pMove.CanMove = false;
         playerInAction = true;
-        
 
         animator.CrossFade(action.AnimationName, 0.05f);
         yield return null;

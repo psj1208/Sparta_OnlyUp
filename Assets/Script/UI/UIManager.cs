@@ -22,5 +22,11 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         InteractTxt = false;
+        interactTxt.text = "";
+    }
+
+    public void ChangeInteract(Object obj)
+    {
+        interactTxt.text = obj.name + "\n" + obj.description;
     }
 }

@@ -20,7 +20,7 @@ public class ObstacleChecker : MonoBehaviour
 
         if (hitdata.hitFound)
         {
-            var heightOrigin = hitdata.hitInfo.point +Vector3.up * heightRayLength;
+            var heightOrigin = hitdata.hitInfo.point + Vector3.up * heightRayLength + transform.forward * 0.2f;
             hitdata.heightHitFound =  Physics.Raycast(heightOrigin, Vector3.down, out hitdata.heightInfo, heightRayLength, obstacleLayer);
 
             Debug.DrawRay(heightOrigin, Vector3.down * heightRayLength, (hitdata.heightHitFound) ? Color.red : Color.green);

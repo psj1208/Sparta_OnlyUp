@@ -11,7 +11,6 @@ public class Buff : MonoBehaviour
     public float durationTime;
     public float durationNumber;
     Coroutine curCoroutine;
-    float preValue;
 
     public void Init(BuffType bType,BuffDurationType bDurType, float val, float dur, float durNum)
     {
@@ -21,7 +20,6 @@ public class Buff : MonoBehaviour
         durationTime = dur;
         durationNumber = durNum;
     }
-
     public void ApplyBuff()
     {
         curCoroutine = StartCoroutine(buffApply());
@@ -33,7 +31,7 @@ public class Buff : MonoBehaviour
         {
             Player p = GameManager.Instance.player;
             StopCoroutine(curCoroutine);
-            p.pMove.MoveSpeed = preValue;
+            p.pMove.MoveSpeed -= value;
             p.pBuff.RemoveBuff(this);
         }
         Destroy(gameObject);
@@ -46,7 +44,6 @@ public class Buff : MonoBehaviour
             if(buffType == BuffType.speed)
             {
                 Player p = GameManager.Instance.player;
-                preValue = p.pMove.MoveSpeed;
                 p.pMove.PlusSpeed(value);
                 yield return new WaitForSeconds(durationTime);
                 DestroyBuff();
