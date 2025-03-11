@@ -18,7 +18,7 @@ public class MovingObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //¸ñÇ¥ ÁöÁ¡±îÁö ¹İº¹ ¿îµ¿
+        //ëª©í‘œ ì§€ì ê¹Œì§€ ë°˜ë³µ ìš´ë™.
         float t = Mathf.PingPong(Time.time * speed, 1f);
         transform.position = Vector3.Lerp(prePos, targetPos, t);
     }
