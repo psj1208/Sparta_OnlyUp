@@ -15,6 +15,7 @@ public class ParkourController : MonoBehaviour
     [Header("Parkour Action Area")]
     public List<ParkourAni> parkourAniList;
     ObstacleInfo hitData;
+    public bool isParkourExecute = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,17 +29,12 @@ public class ParkourController : MonoBehaviour
     void Update()
     {
         hitData = obsCheck.CheckObstacle();
-        if (hitData.hitFound)
-            player.pMove.CanJump = false;
-        else
-            player.pMove.CanJump = true;
     }
 
     public void Parkour(InputAction.CallbackContext context)
     {
         if (context.started && !playerInAction)
         {
-            var hitData = obsCheck.CheckObstacle();
             if (hitData.hitFound)
             {
                 foreach (var action in parkourAniList)
@@ -51,6 +47,21 @@ public class ParkourController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public bool CanParkour()
+    {
+        if (hitData.hitFound)
+        {
+            foreach (var action in parkourAniList)
+            {
+                if (action.CheckIfAvailable(hitData, transform))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     IEnumerator PerformParkourAction(ParkourAni action)

@@ -9,6 +9,7 @@ using UnityEngine.Rendering;
 
 public class PlayerMovement : MonoBehaviour
 {
+    ParkourController parkourCont;
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
     public float MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
@@ -39,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     Coroutine jumpMethod;
     private void Start()
     {
+        parkourCont = GetComponent<ParkourController>();
         rigid = GetComponent<Rigidbody>();
         ani = GetComponent<Animator>();
         //Cursor.lockState = CursorLockMode.Locked;
@@ -77,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started && canJump && isGround && !isJumping) 
+        if (context.phase == InputActionPhase.Started && canJump && isGround && !isJumping && !parkourCont.CanParkour()) 
         {
             jumpMethod = StartCoroutine(Jump());
         }
